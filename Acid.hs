@@ -2,7 +2,7 @@
              DeriveDataTypeable,
              RecordWildCards,
              TypeFamilies #-}
-module Blog where
+module Acid where
 
 import Control.Applicative ((<$>))
 import Control.Monad.Reader (ask)
@@ -10,19 +10,7 @@ import Control.Monad.State (get, put)
 import Data.Acid (AcidState, Query, Update, makeAcidic)
 import Data.Data (Data, Typeable)
 import Data.SafeCopy (base, deriveSafeCopy)
-
-type PostId = Int
-type Title = String
-type Content = String
-
-data Post = Post { title :: Title, content :: Content, postId :: PostId }
-  deriving (Eq, Read, Show, Data, Typeable)
-
-instance Ord Post where
-  compare a b = compare (postId a) (postId b)
-
-data Posts = Posts { posts :: [Post] }
- deriving (Eq, Show, Data, Typeable)
+import Core
 
 $(deriveSafeCopy 0 'base ''Post)
 $(deriveSafeCopy 0 'base ''Posts)
@@ -39,8 +27,5 @@ addPost title content = do
 -- getPosts :: Reader Posts [Post]
 getPosts :: Query Posts [Post]
 getPosts = posts <$> ask
-
-emptyPosts :: Posts
-emptyPosts = Posts { posts = [] }
 
 $(makeAcidic ''Posts ['addPost, 'getPosts])

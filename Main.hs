@@ -6,7 +6,8 @@ import Control.Monad (msum, forM_)
 import Happstack.Server 
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
-import Blog as B
+import Acid
+import Core
 
 import Data.Acid (openLocalState)
 import Data.Acid.Advanced (query', update')
