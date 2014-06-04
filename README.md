@@ -10,4 +10,6 @@ Build with: ghc -threaded Main.hs -o main
 
 Run with: ./main
 
-Navigate to: http://localhost:8000/posts
+View all posts: http://localhost:8000/posts
+
+Add a new post: http://localhost:8000/posts/new 
